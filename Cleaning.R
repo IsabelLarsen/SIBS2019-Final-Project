@@ -138,3 +138,7 @@ drugConsumption$VolatileSubstanceAbuse <- factor(drugConsumption$VolatileSubstan
                                   labels = c("Never", ">Decade", "lastDecade", "lastYear", "lastMonth", "lastWeek", "LastDay"))
 
 
+
+###Export cleaned dataset to SAS
+library(foreign)
+write.foreign(dataName, "c:/mydata.txt", "c:/mydata.sas",   package="SAS")
