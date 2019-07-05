@@ -139,7 +139,7 @@ drugConsumption$VolatileSubstanceAbuse <- factor(drugConsumption$VolatileSubstan
 
 
 
-###Export cleaned dataset to SAS
+###Export cleaned dataset to SAS-readable file
 #install.packages("foreign")
 library(foreign)
 write.foreign(drugConsumption, "C:/Users/izzyl/Desktop/drugConsumption.txt", "C:/Users/izzyl/Desktop/drugConsumption.sas",   package="SAS")
