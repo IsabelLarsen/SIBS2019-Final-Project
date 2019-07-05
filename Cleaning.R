@@ -137,9 +137,14 @@ drugConsumption$VolatileSubstanceAbuse <- factor(drugConsumption$VolatileSubstan
                                   levels = c("CL0", "CL1", "CL2", "CL3", "CL4", "CL5", "CL6"),
                                   labels = c("Never", ">Decade", "lastDecade", "lastYear", "lastMonth", "lastWeek", "LastDay"))
 
-
+###Make just UK & US set
+drugConsumptionUKUS <- drugConsumption[((drugConsumption$Country == "UK" | drugConsumption$Country == "USA") & 
+                                          (drugConsumption$Ethnicity == "White")),]
 
 ###Export cleaned dataset to SAS-readable file
 #install.packages("foreign")
 library(foreign)
-write.foreign(drugConsumption, "C:/Users/izzyl/Desktop/drugConsumption.txt", "C:/Users/izzyl/Desktop/drugConsumption.sas",   package="SAS")
+write.foreign(drugConsumption, "C:/Users/izzyl/Desktop/drugConsumption.txt", "C:/Users/izzyl/Desktop/drugConsumption.sas",  
+              package="SAS")
+write.foreign(drugConsumptionUKUS, "C:/Users/izzyl/Desktop/drugConsumptionUKUS.txt", "C:/Users/izzyl/Desktop/drugConsumptionUKUS.sas",
+              package="SAS")
