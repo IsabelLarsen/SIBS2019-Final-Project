@@ -2,6 +2,7 @@
 library(dplyr)
 library(ggplot2)
 library(gmodels)
+library(readr)
 
 
 # Basic Tables & Plots ----------------------------------------------------
@@ -257,3 +258,67 @@ plot(drugConsumption$VolatileSubstanceAbuse)
             legend.box = "horizontal") 
     
 
+
+# Personality Summaries: Determining Categories ---------------------------
+    
+drugConsump <- read_csv("C:/Users/izzyl/Dropbox/SIBS/Hackathon/SIBS2019-Final-Project/drug_consumption.data", col_names = FALSE)
+names(drugConsump) <- c("ID", "Age", "Gender", "Education", "Country", "Ethnicity", "Neuroticism", "Extraversion", 
+                            "OpennessToExperience", "Agreeableness", "Conscientiousness", "Impulsiveness", "SensationSeeking", 
+                            "Alcohol", "Amphetamines", "AmylNitrite", "Benzodiazepine", "Caffeine", "Cannabis", "Chocolate", 
+                            "Cocaine", "Crack", "Ectasy", "Heroin", "Ketamine", "LegalHighs", "LSD", "Methadone", "MagicMushrooms", 
+                            "Nicotine", "FakeSemeron", "VolatileSubstanceAbuse")
+drugConsump$Country <- factor(drugConsump$Country,
+                                  levels = c(-0.09765, 0.24923, -0.46841, -0.28519, 0.21128, 0.96082, -0.57009),
+                                  labels = c("Australia", "Canada", "NewZeland", "Other", "Ireland", "UK", "USA"))
+drugConsump$Ethnicity <- factor(drugConsump$Ethnicity,
+                                    levels = c(-0.50212, -1.10702, 1.90725, 0.12600, -0.22166, 0.11440, -0.31685),
+                                    labels = c("Asian", "Black", "Black/Asian", "White/Asian", "White/Black", "Other", "White"))
+drugConsumpUKUS <- drugConsump[((drugConsump$Country == "UK" | drugConsump$Country == "USA") & 
+                                          (drugConsump$Ethnicity == "White")),]
+
+drugConsumpUKUS
+#Neuroticism
+  summary(drugConsumpUKUS$Neuroticism)
+  #1st q = -0.678250 = <30
+  #3rd q = 0.629670 = >42
+#Extraversion
+  summary(drugConsumpUKUS$Extraversion)
+  #1st q = -0.695090 = <36
+  #3rd q = 0.637790 = >44
+#Openness to Experience
+  summary(drugConsumpUKUS$OpennessToExperience)
+  #1st q = -0.717270 = <42
+  #3rd q = 0.723300 = >51
+#Agreeableness
+  summary(drugConsumpUKUS$Agreeableness)
+  #1st q = -0.606330 = <40
+  #3rd q = 0.760960 = >48
+#Connscientiousness
+  summary(drugConsumpUKUS$Conscientiousness)
+  #1st q = -0.65253 = <37
+  #3rd q = 0.75830 = >47
+  
+#Add category values to drugConsumption
+  drugConsumptionUKUS <- mutate(drugConsumptionUKUS, NeuroCategory = ifelse(Neuroticism %in% 0:29, "Low",
+                                                                              ifelse(Neuroticism %in% 30:42, "Avg", 
+                                                                                      "High")))
+  drugConsumptionUKUS <- mutate(drugConsumptionUKUS, ExtraCategory = ifelse(Extraversion %in% 0:35, "Low",
+                                                                              ifelse(Extraversion %in% 36:44, "Avg", 
+                                                                                      "High")))
+  drugConsumptionUKUS <- mutate(drugConsumptionUKUS, OpenCategory = ifelse(OpennessToExperience %in% 0:41, "Low",
+                                                                              ifelse(OpennessToExperience %in% 42:51, "Avg",
+                                                                                      "High")))
+  drugConsumptionUKUS <- mutate(drugConsumptionUKUS, AgreeCategory = ifelse(Agreeableness %in% 0:39, "Low",
+                                                                              ifelse(Agreeableness %in% 40:48, "Avg",
+                                                                                   "High")))
+  drugConsumptionUKUS <- mutate(drugConsumptionUKUS, ConscCategory = ifelse(Conscientiousness %in% 0:37, "Low",
+                                                                            ifelse(Conscientiousness %in% 37:47, "Avg",
+                                                                                    "High")))
+                                                                                   
+#Check values
+  table(drugConsumptionUKUS$NeuroCategory)
+  table(drugConsumptionUKUS$ExtraCategory)
+  table(drugConsumptionUKUS$OpenCategory)
+  table(drugConsumptionUKUS$AgreeCategory)
+  table(drugConsumptionUKUS$ConscCategory)
+  
