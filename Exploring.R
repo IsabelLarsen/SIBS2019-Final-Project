@@ -297,6 +297,14 @@ drugConsumpUKUS
   summary(drugConsumpUKUS$Conscientiousness)
   #1st q = -0.65253 = <37
   #3rd q = 0.75830 = >47
+#Impulsiveness
+  summary(drugConsumpUKUS$Impulsiveness)
+  #1st q = -0.71126 
+  #3rd q = 0.52975 
+#Sensation Seeking
+  summary(drugConsumpUKUS$SensationSeeking)
+  #1st q = -0.84637
+  #3rd q = 0.76540
   
 #Add category values to drugConsumption
   drugConsumptionUKUS <- mutate(drugConsumptionUKUS, NeuroCategory = ifelse(Neuroticism %in% 0:29, "Low",
@@ -314,6 +322,10 @@ drugConsumpUKUS
   drugConsumptionUKUS <- mutate(drugConsumptionUKUS, ConscCategory = ifelse(Conscientiousness %in% 0:37, "Low",
                                                                             ifelse(Conscientiousness %in% 37:47, "Avg",
                                                                                     "High")))
+  # Not working right...
+  # drugConsumptionUKUS <- mutate(drugConsumptionUKUS, ImpulCategory = ifelse(Impulsiveness %in% ((-2.55524):(-0.21712)), "Low",
+  #                                                                           ifelse(Impulsiveness %in% -0.21712:0.52975, "Avg",
+  #                                                                                  "High")))
                                                                                    
 #Check values
   table(drugConsumptionUKUS$NeuroCategory)
@@ -321,4 +333,6 @@ drugConsumpUKUS
   table(drugConsumptionUKUS$OpenCategory)
   table(drugConsumptionUKUS$AgreeCategory)
   table(drugConsumptionUKUS$ConscCategory)
+  # Not working right...
+  # table(drugConsumptionUKUS$ImpulCategory)
   
