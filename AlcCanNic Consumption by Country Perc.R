@@ -1,6 +1,7 @@
 library(dplyr)
 library(ggplot2)
 library(gridExtra)
+library(gmodels)
 
 dc <- drugConsumptionUKUS
 
@@ -25,6 +26,8 @@ dc <- drugConsumptionUKUS
       scale_y_continuous(labels = scales::percent)
   grid.arrange(usaAlc, ukAlc, nrow=1, top="Alcohol Consumption: USA v.s UK")
   
+  CrossTable(dc$Alcohol, dc$Country)
+  
 #Nicotine
   #USA
     usaNic <- dc %>% 
@@ -43,6 +46,8 @@ dc <- drugConsumptionUKUS
       geom_text(stat = 'count', position=position_dodge(width=0.9), vjust=-0.5, size = 5) +
       scale_y_continuous(labels = scales::percent)
   grid.arrange(usaNic, ukNic, nrow=1, top="Nicotine Consumption: USA v.s UK")
+  
+  CrossTable(dc$Nicotine, dc$Country)
   
 #Cannabis
   #USA
@@ -63,4 +68,6 @@ dc <- drugConsumptionUKUS
        scale_y_continuous(labels = scales::percent)
   grid.arrange(usaCan, ukCan, nrow=1, top="Cannabis Consumption: USA v.s UK")
   
-
+  CrossTable(dc$Cannabis, dc$Country)
+  
+  
