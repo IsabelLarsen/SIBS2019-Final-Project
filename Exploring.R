@@ -319,7 +319,7 @@ plot(drugConsumption$VolatileSubstanceAbuse)
                                                                       ifelse((ConscNormal < 2), "High", 
                                                                              "Very High"))))))
   table(drugConsumptionUKUS$ConscCat)
-  
+
 #Export updated dataset to SAS
   library(foreign)
   write.foreign(drugConsumptionUKUS, "C:/Users/izzyl/Desktop/drugConsumption3.txt", "C:/Users/izzyl/Desktop/drugConsumption3.sas",  
